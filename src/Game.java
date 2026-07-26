@@ -34,6 +34,8 @@ public class Game {
         this.notes = notes;
     }
 
+    // Getters ..
+
     public String getTitle() {
         return title;
     }
@@ -62,10 +64,47 @@ public class Game {
         return notes;
     }
 
+    // Setters..
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setHoursPlayed(double hoursPlayed) {
+        this.hoursPlayed = hoursPlayed;
+    }
+
+    public void setStatus(GameStatus status){
+        this.status = status;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    /**
+     * Adds total playtime to the hours played
+     * @param hours number of hours to add
+     */
     public void addHoursPlayed(double hours) {
         hoursPlayed += hours;
     }
 
+    /**
+     * Returns game title
+     * @return the game title
+     */
     @Override
     public String toString() {
         return title;
