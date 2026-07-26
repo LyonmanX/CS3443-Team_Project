@@ -1,3 +1,5 @@
+package model;
+
 /**
  * this class is going to represent one game in a users library
  */

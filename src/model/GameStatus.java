@@ -1,3 +1,5 @@
+package model;
+
 /**
 *This class will represent the current status of a particular game
 */
