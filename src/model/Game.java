@@ -6,6 +6,7 @@ package model;
 
 public class Game {
 
+    private String id;
     private String title;
     private String platform;
     private String genre;
@@ -27,6 +28,7 @@ public class Game {
     public Game(String title, String platform, String genre,
                 double hoursPlayed, GameStatus status, String imagePath, String notes) {
 
+        this.id = id;
         this.title = title;
         this.platform = platform;
         this.genre = genre;
@@ -37,6 +39,8 @@ public class Game {
     }
 
     // Getters ..
+
+    public String getId() { return id; }
 
     public String getTitle() {
         return title;
@@ -67,6 +71,9 @@ public class Game {
     }
 
     // Setters..
+
+    public void setId(String id) { this.id = id; }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -101,6 +108,38 @@ public class Game {
      */
     public void addHoursPlayed(double hours) {
         hoursPlayed += hours;
+    }
+
+    /**
+     * Converts this game into a single CSV row. Commas inside any field are
+     * replaced with semicolons so the row always has exactly 8 columns:
+     * id,title,platform,genre,hoursPlayed,status,imageFile,notes
+     * @return a comma separated CSV line representing this game
+     */
+    public String toCSv() {
+        return String.join(",",
+                sanitize(id),
+                sanitize(title),
+                sanitize(platform),
+                sanitize(genre),
+                String.valueOf(hoursPlayed),
+                status == null ? "" : status.name(),
+                sanitize(imageFile),
+                sanitize(notes));
+    }
+
+    /**
+     * !!!!NOTE!!!!!
+     * Probably want a way to convert CSV back to object
+     */
+    //public static Game fromCSV(String csvLine) {}
+
+
+    /**
+     * Replaces commas to prevent colomun breaking in the CSV
+     */
+    private static String sanitize(String line) {
+        return line == null ? "" : line.replace(",", ";");
     }
 
     /**
