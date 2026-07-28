@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="820.0" prefWidth="430.0" style="-fx-background-color: #f8f6fb;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+
+    <top>
+        <VBox alignment="CENTER" prefHeight="115.0" prefWidth="247.0" style="-fx-background-color: linear-gradient(to right, #55149a, #a020b5);         -fx-background-radius: 0 0 32 32;">
+
+            <effect>
+                <DropShadow blurType="GAUSSIAN" color="#5a2a7a55" offsetY="7.0" radius="18.0" />
+            </effect>
+
+            <padding>
+                <Insets bottom="32.0" left="20.0" right="20.0" top="40.0" />
+            </padding>
+
+            <Label prefHeight="81.0" prefWidth="253.0" style="-fx-text-fill: white;             -fx-font-family: Arial;             -fx-font-size: 37px;             -fx-font-weight: bold;" text="Screen Report">
+            <cursor>
+               <Cursor fx:constant="DEFAULT" />
+            </cursor></Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="28.0">
+
+            <padding>
+                <Insets bottom="25.0" left="24.0" right="24.0" top="34.0" />
+            </padding>
+
+            <Label prefHeight="27.0" prefWidth="386.0" style="-fx-text-fill: #24142f;             -fx-font-family: Arial;             -fx-font-size: 24px;             -fx-font-weight: bold;" text="Your Game Library">
+                <font>
+                    <Font name="Arial Black" size="13.0" />
+                </font></Label>
+         <ScrollPane prefHeight="473.0" prefWidth="382.0">
+           <content>
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="477.0" prefWidth="386.0">
+                  <children>
+                     <FlowPane fx:id="gameFlow" alignment="TOP_CENTER" hgap="12.0" prefHeight="463.0" prefWidth="371.0" vgap="12.0">
+                        <padding>
+                           <Insets top="12.0" />
+                        </padding>
+                     </FlowPane>
+                  </children>
+               </AnchorPane>
+           </content>
+         </ScrollPane>
+        </VBox>
+    </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="12.0" />
+         </padding>
+         <children>
+            <Button fx:id="addGameButton" mnemonicParsing="false" onAction="#onAddGame" scaleX="2.0" scaleY="2.0" style="-fx-background-color: linear-gradient(to right, #55149a, #a020b5);" text="Add Game" textFill="WHITE" />
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBack" scaleX="2.0" scaleY="2.0" style="-fx-background-color: linear-gradient(to right, #55149a, #a020b5);" text="Back" textFill="WHITE" />
+         </children>
+      </HBox>
+   </bottom>
+
+</BorderPane>
