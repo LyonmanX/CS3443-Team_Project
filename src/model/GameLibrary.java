@@ -132,7 +132,7 @@ public class GameLibrary {
                 String imageFile = cols[6].trim();
                 String notes = cols[7].trim();
 
-                Game g = new Game(title, platform, genre, hours, status, imageFile, notes);
+                Game g = new Game(id, title, platform, genre, hours, status, imageFile, notes);
                 if (id == null || id.isEmpty()) {
                     g.setId(UUID.randomUUID().toString());
                 } else {
@@ -309,3 +309,4 @@ public class GameLibrary {
         }
         Files.deleteIfExists(Path.of(csvPath));
     }
+}

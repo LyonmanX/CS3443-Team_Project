@@ -1,4 +1,5 @@
 package model;
+import java.util.UUID;
 
 /**
  * this class is going to represent one game in a users library
@@ -25,7 +26,7 @@ public class Game {
      * @param imagePath file path of the game cover image
      * @param notes user notes about a game
      */
-    public Game(String title, String platform, String genre,
+    public Game(String id, String title, String platform, String genre,
                 double hoursPlayed, GameStatus status, String imagePath, String notes) {
 
         this.id = id;
@@ -124,7 +125,7 @@ public class Game {
                 sanitize(genre),
                 String.valueOf(hoursPlayed),
                 status == null ? "" : status.name(),
-                sanitize(imageFile),
+                sanitize(imagePath),
                 sanitize(notes));
     }
 

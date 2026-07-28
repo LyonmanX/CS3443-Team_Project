@@ -8,5 +8,6 @@
     <orderEntry type="jdk" jdkName="26" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="javafx-sdk-26" level="project" />
+    <orderEntry type="library" name="javafx.base" level="project" />
   </component>
 </module>
