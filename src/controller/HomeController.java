@@ -3,6 +3,10 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import model.GameLibrary;
+import util.SceneNavigator;
+
+import java.io.IOException;
 
 /**
  * This class will be the controller for the Home Screen
@@ -16,14 +20,21 @@ public class HomeController {
 
     @FXML private Button gameLibraryButton;
 
+    private final GameLibrary library = GameLibrary.getInstance();
+
     /**
      * initializes home screen
      */
 
     @FXML public void initialize() {
 
-        totalGamesLabel.setText("0");
-        totalHoursLabel.setText("0");
+        try {
+            library.loadFromCSV();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+        updateInformation(library.getTotalGames(), library.getTotalHours());
 
     }
 
@@ -32,7 +43,7 @@ public class HomeController {
      */
 
     @FXML private void openGameLibrary(){
-
+        SceneNavigator.switchScene(gameLibraryButton, "/resources/layouts/game-library.fxml");
     }
 
     /**

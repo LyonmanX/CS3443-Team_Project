@@ -112,7 +112,7 @@
 
             <Region VBox.vgrow="ALWAYS" />
 
-            <Button fx:id="gameLibraryButton" maxWidth="Infinity" prefHeight="54.0" style="-fx-background-color: linear-gradient(to right, #65159a, #a122b5);
+            <Button fx:id="gameLibraryButton" maxWidth="Infinity" onAction="#openGameLibrary" prefHeight="54.0" style="-fx-background-color: linear-gradient(to right, #65159a, #a122b5);
             -fx-background-radius: 18;
             -fx-text-fill: white;
             -fx-font-family: Arial;

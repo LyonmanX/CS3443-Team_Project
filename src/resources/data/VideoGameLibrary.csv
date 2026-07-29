@@ -1,12 +1,11 @@
-﻿GameTitle,ReleaseYear,Genre,Developer,Platform,HoursPlayed,MetacriticScore,ImageFile
-Call of Duty: Black Ops II,2012,FPS,Treyarch,PC,420,83,CallofDutyBlackOpsII.jpg
-Halo 4,2012,FPS,343 Industries,Xbox,155,87,Halo4.jpg
-Far Cry 3,2012,Action,Ubisoft,PC,88,91,FarCry3.jpg
-Grand Theft Auto V,2013,Action,Rockstar,PC,510,97,GTAV.jpg
-The Last of Us,2013,Action,Naughty Dog,PlayStation,95,95,TheLastofUs.jpg
-Battlefield 4,2013,FPS,DICE,PC,176,81,Battlefield4.jpg
-Fortnite,2017,Battle Royale,Epic Games,PC,925,0,Fortnite.jpg
-Elden Ring,2022,RPG,FromSoftware,PC,310,96,EldenRing.jpg
-Spider-Man 2,2023,Action,Insomniac,PlayStation,44,90,SipderMan2.jpg
-Marvel Rivals,2025,Hero Shooter,NetEase,PC,187,0,MarvelRivals.jpg
-
+id,title,platform,genre,hoursPlayed,status,imageFile,notes
+40cc5f52-9891-44c5-84ef-5cefa776bcef,Call of Duty: Black Ops II,PC,FPS,420.0,PLAYING,CallofDutyBlackOpsII.jpg,Developer: Treyarch | Metacritic: 83
+a60761d0-a13c-4d65-a83a-d835a3fdc09d,Halo 4,Xbox,FPS,155.0,PLAYING,Halo4.jpg,Developer: 343 Industries | Metacritic: 87
+d5727ab9-b5fe-45a3-9efc-67bce56a727d,Far Cry 3,PC,Action,88.0,PLAYING,FarCry3.jpg,Developer: Ubisoft | Metacritic: 91
+4844db15-51b1-4930-9932-64d213f381e2,Grand Theft Auto V,PC,Action,510.0,PLAYING,GTAV.jpg,Developer: Rockstar | Metacritic: 97
+b6b4fa2b-e4be-4939-8d35-bdae929dfb84,The Last of Us,PlayStation,Action,95.0,PLAYING,TheLastofUs.jpg,Developer: Naughty Dog | Metacritic: 95
+e284a8e6-c397-45df-ab66-29112522a707,Battlefield 4,PC,FPS,176.0,PLAYING,Battlefield4.jpg,Developer: DICE | Metacritic: 81
+4d808d66-b826-42f9-80eb-3e820e2d52e2,Fortnite,PC,Battle Royale,925.0,PLAYING,Fortnite.jpg,Developer: Epic Games
+bb7b5385-7b6a-4c6e-b37a-b9699a75e389,Elden Ring,PC,RPG,310.0,PLAYING,EldenRing.jpg,Developer: FromSoftware | Metacritic: 96
+f816703c-8993-47d5-a1ce-809612452965,Spider-Man 2,PlayStation,Action,44.0,PLAYING,SpiderMan2.jpg,Developer: Insomniac | Metacritic: 90
+72793d97-454f-4b06-8db5-a01db59126bd,Marvel Rivals,PC,Hero Shooter,187.0,PLAYING,MarvelRivals.jpg,Developer: NetEase

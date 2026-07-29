@@ -3,12 +3,10 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.Game;
-
-import java.io.File;
-import java.net.URL;
+import util.GameImages;
+import util.SceneNavigator;
 
 /**
  * This class is going to controll the game details screen
@@ -32,6 +30,8 @@ public class GameDetailsController {
     @FXML private Button gameLibraryButton;
 
     @FXML private Button timerButton;
+
+    @FXML private Button editButton;
 
     private Game selectedGame;
 
@@ -103,30 +103,7 @@ public class GameDetailsController {
      */
 
     private void displayGameImage(String imagePath) {
-
-        gameImageView.setImage(null);
-
-        if(imagePath == null || imagePath.isBlank()) {
-            return;
-        }
-
-        try {
-            URL resourceImage = getClass().getResource("/images/" + imagePath);
-
-            if (resourceImage != null) {
-                gameImageView.setImage(new Image(resourceImage.toExternalForm()));
-                return;
-            }
-
-            File imageFile = new File(imagePath);
-
-            if (imageFile.exists()) {
-                gameImageView.setImage(new Image(imageFile.toURI().toString()));
-            }
-        }
-        catch (Exception execption) {
-            System.out.println("Could not load image: " + imagePath);
-        }
+        gameImageView.setImage(GameImages.resolve(imagePath));
     }
 
     /**
@@ -161,7 +138,26 @@ public class GameDetailsController {
 
     @FXML
     private void openGameLibrary(){
+        SceneNavigator.switchScene(gameLibraryButton, "/resources/layouts/game-library.fxml");
+    }
 
+    /**
+     * Opens the Edit Game screen for the currently selected game
+     */
+
+    @FXML
+    private void openEdit() {
+
+        if (selectedGame == null) {
+            return;
+        }
+
+        EditGameController controller = SceneNavigator.switchScene(
+                editButton, "/resources/layouts/editgame.fxml");
+
+        if (controller != null) {
+            controller.setGame(selectedGame);
+        }
     }
 
     /**

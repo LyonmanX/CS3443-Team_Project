@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 public class GameLibrary {
 
-    private static final String DEFAULT_CSV = "data/VideoGameLibrary.csv";
+    private static final String DEFAULT_CSV = "src/resources/data/VideoGameLibrary.csv";
     private static volatile GameLibrary instance;
 
     private final List<Game> games;
