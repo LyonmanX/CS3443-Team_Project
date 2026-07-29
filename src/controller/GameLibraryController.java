@@ -8,6 +8,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.Button;
 import util.SceneNavigator;
+import model.GameStatus;
+import util.GameImages;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -46,6 +48,11 @@ public class GameLibraryController {
 
         try {
             InputStream is = getClass().getResourceAsStream(CSV_PATH);
+            if (is == null) {
+                System.out.println("CSV file not found: " + CSV_PATH);
+                return games;
+            }
+
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             String line = br.readLine();
@@ -53,16 +60,38 @@ public class GameLibraryController {
 
             while ((line = br.readLine()) != null) {
                 // Split the row into columns.
-                String[] data = line.split(",");
+                String[] data = line.split(",", -1);
+                if (data.length < 8) {
+                    continue;
+                }
 
-                // Column 0 = GameTitle
+                String id = data[0];
                 String title = data[1];
+                String platform = data[2];
+                String genre = data[3];
 
-                // Column 7 = ImageFile
+                double hoursPlayed;
+                try {
+                    hoursPlayed = Double.parseDouble(data[4]);
+                }
+                catch (NumberFormatException exception) {
+                    hoursPlayed = 0.0;
+                }
+
+                GameStatus status;
+                try {
+                    status = GameStatus.valueOf(data[5]);
+                }
+                catch (IllegalArgumentException exception) {
+                    status = null;
+                }
                 String imageFile = data[6];
+                String notes = data[7];
 
-                // Store the game entry.
-                games.add(new Game(title, imageFile));
+                model.Game fullGame = new model.Game(id, title, platform, genre, hoursPlayed,
+                        status, imageFile, notes);
+
+                games.add(new Game(fullGame));
             }
 
         } catch (Exception e) {
@@ -84,11 +113,21 @@ public class GameLibraryController {
                 // Locate the ImageView inside the cell.
                 ImageView cover = (ImageView) cell.lookup("#coverImage");
 
-                // Load the game's image from resources/data.
-                Image img = new Image(getClass().getResourceAsStream(DATA_FOLDER + game.getImageFile()));
+                if(cover != null) {
+                    cover.setImage(GameImages.resolve(game.getImageFile()));
+                }
 
-                // Assign the image to the ImageView.
-                cover.setImage(img);
+                cell.setStyle("-fx-cursor: hand;");
+
+                cell.setOnMouseClicked(event -> {
+
+                    GameDetailsController controller = SceneNavigator.switchScene(cell,
+                            "/resources/layouts/game-details.fxml");
+                    if (controller != null) {
+                        controller.setSelectedGame(game.getFullGame());
+                    }
+                });
+
 
                 // Add the completed cell to the FlowPane.
                 gameFlow.getChildren().add(cell);
@@ -100,16 +139,19 @@ public class GameLibraryController {
 
     // Simple data class representing a game entry.
     public static class Game {
-        private final String title;
-        private final String imageFile;
 
-        public Game(String title, String imageFile) {
-            this.title = title;
-            this.imageFile = imageFile;
+        private final model.Game fullGame;
+
+        public Game(model.Game fullGame) {
+            this.fullGame = fullGame;
         }
 
         public String getImageFile() {
-            return imageFile;
+            return fullGame.getImagePath();
+        }
+
+        public model.Game getFullGame() {
+            return fullGame;
         }
     }
 
