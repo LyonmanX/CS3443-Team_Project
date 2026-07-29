@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.control.Button;
+import util.SceneNavigator;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -16,13 +18,19 @@ import java.util.List;
 public class GameLibraryController {
 
     @FXML
-    private FlowPane gameFlow; 
+    private FlowPane gameFlow;
     // FlowPane that holds all game cells.
 
-    private static final String CSV_PATH = "/data/VideoGameLibrary.csv";
+    @FXML
+    private Button addGameButton;
+
+    @FXML
+    private Button backButton;
+
+    private static final String CSV_PATH = "/resources/data/VideoGameLibrary.csv";
     // Path to the CSV file inside the resources/data folder.
 
-    private static final String DATA_FOLDER = "/data/";
+    private static final String DATA_FOLDER = "/resources/data/";
     // Folder containing both the CSV file and all game images.
 
     public void initialize() {
@@ -40,7 +48,7 @@ public class GameLibraryController {
             InputStream is = getClass().getResourceAsStream(CSV_PATH);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-            String line = br.readLine(); 
+            String line = br.readLine();
             // Skip the header row.
 
             while ((line = br.readLine()) != null) {
@@ -48,10 +56,10 @@ public class GameLibraryController {
                 String[] data = line.split(",");
 
                 // Column 0 = GameTitle
-                String title = data[0];
+                String title = data[1];
 
                 // Column 7 = ImageFile
-                String imageFile = data[7];
+                String imageFile = data[6];
 
                 // Store the game entry.
                 games.add(new Game(title, imageFile));
@@ -70,7 +78,7 @@ public class GameLibraryController {
             for (Game game : games) {
 
                 // Load the FXML template for a single game cell.
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/game-cell.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/layouts/game-cell.fxml"));
                 StackPane cell = loader.load();
 
                 // Locate the ImageView inside the cell.
@@ -104,3 +112,14 @@ public class GameLibraryController {
             return imageFile;
         }
     }
+
+    @FXML
+    private void onAddGame() {
+        SceneNavigator.switchScene(addGameButton,"/layouts/addgame.fxml");
+    }
+
+    @FXML private void onBack() {
+        SceneNavigator.switchScene(backButton,"/layouts/home-screen.fxml");
+    }
+
+}
