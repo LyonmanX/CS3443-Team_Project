@@ -157,11 +157,11 @@ public class GameLibraryController {
 
     @FXML
     private void onAddGame() {
-        SceneNavigator.switchScene(addGameButton,"/layouts/addgame.fxml");
+        SceneNavigator.switchScene(addGameButton,"/resources/layouts/addgame.fxml");
     }
 
     @FXML private void onBack() {
-        SceneNavigator.switchScene(backButton,"/layouts/home-screen.fxml");
+        SceneNavigator.switchScene(backButton,"/resources/layouts/home-screen.fxml");
     }
 
 }
