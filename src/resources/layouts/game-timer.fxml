@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.GameTimerController"
+            prefWidth="390.0"
+            prefHeight="844.0"
+            style="-fx-background-color: white;">
+
+    <!-- Game Title -->
+    <top>
+        <VBox alignment="CENTER">
+            <padding>
+                <Insets top="70" bottom="40"/>
+            </padding>
+
+            <Label fx:id="gameTitleLabel"
+                   text="Game Title"
+                   style="-fx-font-size: 28px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #3f0066;"/>
+        </VBox>
+    </top>
+
+    <!-- Timer -->
+    <center>
+        <VBox alignment="CENTER" spacing="30">
+
+            <StackPane fx:id="timerCircle"
+                       onMouseClicked="#onTimerCircleClicked">
+
+                <Circle radius="105"
+                        fill="#F6F6F6"
+                        stroke="black"
+                        strokeWidth="1.5"/>
+
+                <Label fx:id="timerLabel"
+                       text="00:00.00"
+                       style="-fx-font-size: 38px;"/>
+            </StackPane>
+
+            <HBox alignment="CENTER" spacing="15">
+
+                <Button fx:id="startPauseButton"
+                        text="Start"
+                        onAction="#onStartPause"
+                        prefWidth="90"/>
+
+                <Button fx:id="resetButton"
+                        text="Reset"
+                        onAction="#onReset"
+                        prefWidth="90"/>
+
+            </HBox>
+
+            <Button text="Finish Session"
+                    onAction="#onFinishSession"
+                    prefWidth="180"/>
+
+        </VBox>
+    </center>
+
+    <!-- Bottom -->
+    <bottom>
+        <VBox alignment="CENTER">
+            <padding>
+                <Insets top="40" bottom="35"/>
+            </padding>
+
+            <Button fx:id="gameLibraryButton"
+                    text="Game Library"
+                    onAction="#onGameLibrary"
+                    prefWidth="180"
+                    style="-fx-font-size:18px;
+                           -fx-font-weight:bold;
+                           -fx-text-fill:#3f0066;"/>
+        </VBox>
+    </bottom>
+
+</BorderPane>
