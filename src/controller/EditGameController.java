@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -30,6 +31,7 @@ public class EditGameController {
     @FXML private ComboBox<String> genreCombo;
     @FXML private TextField hoursField;
     @FXML private ComboBox<GameStatus> statusCombo;
+    @FXML private TextArea descriptionField;
     @FXML private ImageView previewImage;
     @FXML private Label imageFileLabel;
     @FXML private Button chooseImageButton;
@@ -73,6 +75,7 @@ public class EditGameController {
         genreCombo.getEditor().setText(game.getGenre() == null ? "" : game.getGenre());
         hoursField.setText(formatHours(game.getHoursPlayed()));
         statusCombo.setValue(game.getStatus());
+        descriptionField.setText(game.getNotes() == null ? "" : game.getNotes());
 
         selectedImageFile = game.getImagePath();
         imageFileLabel.setText(selectedImageFile == null || selectedImageFile.isBlank()
@@ -120,6 +123,7 @@ public class EditGameController {
         game.setHoursPlayed(parseHours(hoursField.getText()));
         game.setStatus(statusCombo.getValue());
         game.setImagePath(selectedImageFile);
+        game.setNotes(descriptionField.getText() == null ? "" : descriptionField.getText().trim());
 
         library.updateGame(game);
 

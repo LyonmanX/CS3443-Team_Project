@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -27,6 +28,7 @@ public class AddGameController {
     @FXML private ComboBox<String> platformCombo;
     @FXML private ComboBox<String> genreCombo;
     @FXML private TextField hoursField;
+    @FXML private TextArea descriptionField;
     @FXML private ImageView previewImage;
     @FXML private Label imageFileLabel;
     @FXML private Button chooseImageButton;
@@ -93,9 +95,10 @@ public class AddGameController {
         GameStatus status = hours > 0 ? GameStatus.PLAYING : GameStatus.NOT_STARTED;
 
         String imagePath = selectedImageFile == null ? GameImages.PLACEHOLDER_IMAGE : selectedImageFile;
+        String description = descriptionField.getText() == null ? "" : descriptionField.getText().trim();
 
         Game game = new Game(UUID.randomUUID().toString(), title, platform, genre,
-                hours, status, imagePath, "");
+                hours, status, imagePath, description);
 
         library.addGame(game);
 

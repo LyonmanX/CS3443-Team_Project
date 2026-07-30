@@ -154,6 +154,21 @@
                         -fx-font-size: 15px;" />
                     </VBox>
 
+                    <VBox spacing="6.0">
+                        <Label style="-fx-text-fill: #808080;
+                        -fx-font-family: Arial;
+                        -fx-font-size: 13px;
+                        -fx-font-weight: bold;" text="DESCRIPTION" />
+
+                        <TextArea fx:id="descriptionField" prefRowCount="4" promptText="Add a description..."
+                                  wrapText="true" style="-fx-background-color: #f3f0f7;
+                        -fx-background-radius: 10;
+                        -fx-border-color: #e3daea;
+                        -fx-border-radius: 10;
+                        -fx-font-family: Arial;
+                        -fx-font-size: 15px;" />
+                    </VBox>
+
                     <Label fx:id="errorLabel" managed="false" style="-fx-text-fill: #c0392b;
                     -fx-font-family: Arial;
                     -fx-font-size: 12px;
