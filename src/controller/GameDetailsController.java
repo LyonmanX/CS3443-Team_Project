@@ -170,6 +170,13 @@ public class GameDetailsController {
         if (selectedGame == null) {
             return;
         }
+
+        GameTimerController controller = SceneNavigator.switchScene(
+                timerButton, "/resources/layouts/game-timer.fxml");
+
+        if (controller != null) {
+            controller.setGame(selectedGame);
+        }
     }
 
     /**
