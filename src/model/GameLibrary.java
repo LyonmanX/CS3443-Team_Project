@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -26,14 +28,84 @@ import java.util.stream.Collectors;
 public class GameLibrary {
 
     private static final String DEFAULT_CSV = "src/resources/data/VideoGameLibrary.csv";
+    private static final String CLASSPATH_CSV = "/resources/data/VideoGameLibrary.csv";
     private static volatile GameLibrary instance;
 
     private final List<Game> games;
     private final String csvPath;
 
     private GameLibrary(String csvPath) {
-        this.csvPath = csvPath == null || csvPath.isEmpty() ? DEFAULT_CSV : csvPath;
+        this.csvPath = resolveCsvPath(csvPath == null || csvPath.isEmpty() ? DEFAULT_CSV : csvPath);
         this.games = Collections.synchronizedList(new ArrayList<>());
+    }
+
+    /**
+     * Figures out where the real CSV file is, regardless of what the app's
+     * current working directory happens to be.
+     * <p>
+     * The requested path (normally "src/resources/data/VideoGameLibrary.csv")
+     * is correct when resolved relative to the project root - that's where
+     * the file lives in the repo. But if the app isn't launched with the
+     * project root as its working directory, that relative path either
+     * doesn't exist or points at a stray, empty file created by an earlier
+     * run. In that case we fall back to wherever the compiled classpath
+     * resource actually lives (e.g. IntelliJ's "out" folder), which will
+     * have the real, populated CSV copied over at build time.
+     * <p>
+     * Whichever candidate actually has game rows in it wins, so we don't
+     * silently settle on an empty file when a populated one is reachable.
+     */
+    private static String resolveCsvPath(String requestedPath) {
+        File relative = new File(requestedPath).getAbsoluteFile();
+        if (hasGameRows(relative)) {
+            return relative.getPath();
+        }
+
+        URL resource = GameLibrary.class.getResource(CLASSPATH_CSV);
+        if (resource != null) {
+            try {
+                File classpathFile = new File(resource.toURI());
+                if (hasGameRows(classpathFile)) {
+                    return classpathFile.getPath();
+                }
+            } catch (URISyntaxException ignored) {
+                // fall through to the best-guess relative path below
+            }
+        }
+
+        return relative.getPath();
+    }
+
+    private static boolean hasGameRows(File file) {
+        if (file == null || !file.isFile()) {
+            return false;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            boolean firstLine = true;
+            int dataLines = 0;
+
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                if (firstLine) {
+                    firstLine = false;
+                    String lower = line.toLowerCase();
+                    if (lower.startsWith("id,") || lower.startsWith("title,")) {
+                        continue;
+                    }
+                }
+
+                dataLines++;
+            }
+
+            return dataLines > 0;
+        } catch (IOException exception) {
+            return false;
+        }
     }
 
     /**

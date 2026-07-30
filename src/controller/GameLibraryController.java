@@ -2,26 +2,31 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.image.Image;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.control.Button;
-import util.SceneNavigator;
-import model.GameStatus;
+import model.Game;
+import model.GameLibrary;
 import util.GameImages;
+import util.SceneNavigator;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controls the Game Library screen: shows every saved game as a cover-art
+ * cell and handles navigating to Add Game or a game's details.
+ * <p>
+ * Reads through the shared {@link GameLibrary} singleton so that games
+ * added/edited/removed on other screens (which all go through the same
+ * singleton) are always reflected here - there is only ever one source of
+ * truth for the game list.
+ */
 public class GameLibraryController {
 
     @FXML
     private FlowPane gameFlow;
-    // FlowPane that holds all game cells.
 
     @FXML
     private Button addGameButton;
@@ -29,139 +34,55 @@ public class GameLibraryController {
     @FXML
     private Button backButton;
 
-    private static final String CSV_PATH = "/resources/data/VideoGameLibrary.csv";
-    // Path to the CSV file inside the resources/data folder.
+    private final GameLibrary library = GameLibrary.getInstance();
 
-    private static final String DATA_FOLDER = "/resources/data/";
-    // Folder containing both the CSV file and all game images.
-
+    @FXML
     public void initialize() {
-        // Runs when the FXML view is loaded.
-        // Loads game data from the CSV and displays each game.
-        List<Game> games = loadGamesFromCSV();
-        displayGames(games);
-    }
-
-    private List<Game> loadGamesFromCSV() {
-        // Reads the CSV file and converts each row into a Game object.
-        List<Game> games = new ArrayList<>();
-
         try {
-            InputStream is = getClass().getResourceAsStream(CSV_PATH);
-            if (is == null) {
-                System.out.println("CSV file not found: " + CSV_PATH);
-                return games;
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            String line = br.readLine();
-            // Skip the header row.
-
-            while ((line = br.readLine()) != null) {
-                // Split the row into columns.
-                String[] data = line.split(",", -1);
-                if (data.length < 8) {
-                    continue;
-                }
-
-                String id = data[0];
-                String title = data[1];
-                String platform = data[2];
-                String genre = data[3];
-
-                double hoursPlayed;
-                try {
-                    hoursPlayed = Double.parseDouble(data[4]);
-                }
-                catch (NumberFormatException exception) {
-                    hoursPlayed = 0.0;
-                }
-
-                GameStatus status;
-                try {
-                    status = GameStatus.valueOf(data[5]);
-                }
-                catch (IllegalArgumentException exception) {
-                    status = null;
-                }
-                String imageFile = data[6];
-                String notes = data[7];
-
-                model.Game fullGame = new model.Game(id, title, platform, genre, hoursPlayed,
-                        status, imageFile, notes);
-
-                games.add(new Game(fullGame));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            library.loadFromCSV();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
 
-        return games;
+        displayGames(library.getAllGames());
     }
 
     private void displayGames(List<Game> games) {
-        // Creates a game-cell.fxml for each game and adds it to the FlowPane.
-        try {
-            for (Game game : games) {
+        gameFlow.getChildren().clear();
 
-                // Load the FXML template for a single game cell.
+        for (Game game : games) {
+            try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/layouts/game-cell.fxml"));
                 StackPane cell = loader.load();
 
-                // Locate the ImageView inside the cell.
                 ImageView cover = (ImageView) cell.lookup("#coverImage");
-
-                if(cover != null) {
-                    cover.setImage(GameImages.resolve(game.getImageFile()));
+                if (cover != null) {
+                    cover.setImage(GameImages.resolve(game.getImagePath()));
                 }
 
                 cell.setStyle("-fx-cursor: hand;");
-
                 cell.setOnMouseClicked(event -> {
-
-                    GameDetailsController controller = SceneNavigator.switchScene(cell,
-                            "/resources/layouts/game-details.fxml");
+                    GameDetailsController controller = SceneNavigator.switchScene(
+                            cell, "/resources/layouts/game-details.fxml");
                     if (controller != null) {
-                        controller.setSelectedGame(game.getFullGame());
+                        controller.setSelectedGame(game);
                     }
                 });
 
-
-                // Add the completed cell to the FlowPane.
                 gameFlow.getChildren().add(cell);
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Simple data class representing a game entry.
-    public static class Game {
-
-        private final model.Game fullGame;
-
-        public Game(model.Game fullGame) {
-            this.fullGame = fullGame;
-        }
-
-        public String getImageFile() {
-            return fullGame.getImagePath();
-        }
-
-        public model.Game getFullGame() {
-            return fullGame;
         }
     }
 
     @FXML
     private void onAddGame() {
-        SceneNavigator.switchScene(addGameButton,"/resources/layouts/addgame.fxml");
+        SceneNavigator.switchScene(addGameButton, "/resources/layouts/addgame.fxml");
     }
 
-    @FXML private void onBack() {
-        SceneNavigator.switchScene(backButton,"/resources/layouts/home-screen.fxml");
+    @FXML
+    private void onBack() {
+        SceneNavigator.switchScene(backButton, "/resources/layouts/home-screen.fxml");
     }
-
 }
