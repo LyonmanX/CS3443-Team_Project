@@ -21,6 +21,7 @@ import java.nio.file.StandardCopyOption;
 public class GameImages {
 
     public static final String DATA_DIR = "src/resources/data/";
+    public static final String PLACEHOLDER_IMAGE = "NoImage.jpg";
     private static final String CLASSPATH_DIR = "/resources/data/";
 
     private GameImages() {
@@ -56,9 +57,25 @@ public class GameImages {
 
     /**
      * Resolves a stored image file name (or full path) into a loadable Image.
-     * Returns null if there is nothing to show.
+     * Falls back to the "no image" placeholder when there is nothing to show,
+     * so cover-less games never render as a blank box.
      */
     public static Image resolve(String imagePath) {
+        if (imagePath == null || imagePath.isBlank()) {
+            return resolveExact(PLACEHOLDER_IMAGE);
+        }
+
+        Image image = resolveExact(imagePath);
+        if (image != null) {
+            return image;
+        }
+
+        // The stored file name didn't load (missing/renamed/corrupt) -
+        // fall back to the placeholder rather than showing nothing.
+        return imagePath.equals(PLACEHOLDER_IMAGE) ? null : resolveExact(PLACEHOLDER_IMAGE);
+    }
+
+    private static Image resolveExact(String imagePath) {
         if (imagePath == null || imagePath.isBlank()) {
             return null;
         }

@@ -45,6 +45,9 @@ public class AddGameController {
 
         genreCombo.setItems(FXCollections.observableArrayList(
                 "Action", "Adventure", "RPG", "FPS", "Battle Royale", "Sports", "Puzzle", "Strategy"));
+
+        previewImage.setImage(GameImages.resolve(GameImages.PLACEHOLDER_IMAGE));
+        imageFileLabel.setText("No image selected");
     }
 
     /**
@@ -89,8 +92,10 @@ public class AddGameController {
 
         GameStatus status = hours > 0 ? GameStatus.PLAYING : GameStatus.NOT_STARTED;
 
+        String imagePath = selectedImageFile == null ? GameImages.PLACEHOLDER_IMAGE : selectedImageFile;
+
         Game game = new Game(UUID.randomUUID().toString(), title, platform, genre,
-                hours, status, selectedImageFile, "");
+                hours, status, imagePath, "");
 
         library.addGame(game);
 
