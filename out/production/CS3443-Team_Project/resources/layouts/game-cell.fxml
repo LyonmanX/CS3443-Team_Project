@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane
+        prefHeight="170.0"
+        prefWidth="140.0"
+        xmlns="http://javafx.com/javafx/26"
+        xmlns:fx="http://javafx.com/fxml/1">
+
+   <ImageView
+           fx:id="coverImage"
+           fitHeight="150.0"
+           fitWidth="120.0"
+           pickOnBounds="true"
+           preserveRatio="true"/>
+
+</StackPane>

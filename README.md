@@ -28,7 +28,10 @@ Automatically load and save game data using a CSV file.
 Project Structure
 
 src/
-controllers/
+
+Main.java
+
+/controller/
 HomeController.java
 GameLibraryController.java
 AddGameController.java
@@ -36,19 +39,18 @@ EditGameController.java
 GameDetailsController.java
 GameTimerController.java
 
-model/
+/model/
 Game.java
 GameLibrary.java
 GameStatus.java
-GameTimer.java
 
-util/
+/util/
 SceneNavigator.java
 GameImages.java
 
-resources/
-layouts/ (FXML files)
-data/ (CSV file and cover images)
+/resources/
+/layouts/ (FXML files)
+/data/ (CSV file and cover images)
 
 Data Storage
 
@@ -58,18 +60,38 @@ src/resources/data/VideoGameLibrary.csv
 Cover images are stored in the same folder. A placeholder image is used when no cover is available.
 
 How to Run
+1. Install a JDK
 
-Install Java 17 or later.
+Install JDK 26. In IntelliJ, go to File → Project Structure → Project and confirm the Project SDK is set to 26 (or update it to match whatever JDK you have installed, then update the module's Module SDK to match under File → Project Structure → Modules → Dependencies).
 
-Install JavaFX and configure it in your IDE.
+2. Install and configure JavaFX
 
+JavaFX is a separate SDK from the JDK and has to be added manually:
+
+Download the JavaFX SDK (not the jmods) for your OS from https://gluonhq.com/products/javafx/, matching your JDK version where possible.
+Extract it somewhere permanent (e.g. C:\javafx-sdk-26 or ~/javafx-sdk-26) — avoid nested folders you might delete later.
+In IntelliJ: File → Project Structure → Libraries → + → Java → select the lib folder inside the extracted JavaFX SDK (the folder containing files like javafx.controls.jar, javafx.fxml.jar, javafx.base.jar, javafx.graphics.jar).
+Attach the library to the project module under File → Project Structure → Modules → Dependencies if it isn't already listed there.
+
+3. Add VM options for running the app
+
+JavaFX modules aren't found automatically at runtime — you need to tell the JVM where they are:
+
+Run → Edit Configurations... → select (or create) the Main configuration.
+Under "Modify options," enable Add VM options.
+Enter, using your actual JavaFX SDK path:
+
+   --module-path "/path/to/javafx-sdk-26/lib" --add-modules javafx.controls,javafx.fxml
+
+4. Clone and run
 Clone the repository.
-
 Open the project in your IDE.
 
-Run the main application file.
+Run Main.java.
 
-The application will load the CSV file and open the Home Screen.
+For testing:
+
+There is an additional image in /testimage, this is provided for adding a new game with an icon. Or you can use any custom png or jpg you'd like.
 
 Team Members
 

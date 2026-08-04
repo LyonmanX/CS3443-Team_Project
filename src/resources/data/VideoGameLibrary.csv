@@ -1,8 +1,8 @@
 id,title,platform,genre,hoursPlayed,status,imageFile,notes
-40cc5f52-9891-44c5-84ef-5cefa776bcef,Call of Duty: Black Ops II,PC,FPS,420.0,PLAYING,CallofDutyBlackOpsII.jpg,Developer: Treyarch | Metacritic: 83
-a60761d0-a13c-4d65-a83a-d835a3fdc09d,Halo 4,Xbox,FPS,155.0,PLAYING,Halo4.jpg,Developer: 343 Industries | Metacritic: 87
+40cc5f52-9891-44c5-84ef-5cefa776bcef,Call of Duty: Black Ops II,PC,FPS,420.000418908,PLAYING,CallofDutyBlackOpsII.jpg,Developer: Treyarch | Metacritic: 83
+a60761d0-a13c-4d65-a83a-d835a3fdc09d,Halo 4,Xbox,FPS,155.00057998133335,PLAYING,Halo4.jpg,Developer: 343 Industries | Metacritic: 87
 d5727ab9-b5fe-45a3-9efc-67bce56a727d,Far Cry 3,PC,Action,88.0,PLAYING,FarCry3.jpg,Developer: Ubisoft | Metacritic: 91
-4844db15-51b1-4930-9932-64d213f381e2,Grand Theft Auto V,PC,Action,510.0,PLAYING,GTAV.jpg,Developer: Rockstar | Metacritic: 97
+4844db15-51b1-4930-9932-64d213f381e2,Grand Theft Auto V,PC,Action,510.0003028614167,PLAYING,GTAV.jpg,Developer: Rockstar | Metacritic: 97
 b6b4fa2b-e4be-4939-8d35-bdae929dfb84,The Last of Us,PlayStation,Action,95.0,PLAYING,TheLastofUs.jpg,Developer: Naughty Dog | Metacritic: 95
 e284a8e6-c397-45df-ab66-29112522a707,Battlefield 4,PC,FPS,176.0,PLAYING,Battlefield4.jpg,Developer: DICE | Metacritic: 81
 4d808d66-b826-42f9-80eb-3e820e2d52e2,Fortnite,PC,Battle Royale,925.0,PLAYING,Fortnite.jpg,Developer: Epic Games
